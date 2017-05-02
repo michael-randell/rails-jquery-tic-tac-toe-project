@@ -1,0 +1,12 @@
+tags:
+  - selectors
+  - jquery
+languages:
+  - JavaScript
+  - js
+  - rails
+resources: 1
+project:
+  review_criteria:
+   - All tests pass
+   - Handles persistence

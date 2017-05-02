@@ -1,0 +1,9 @@
+# A list of javascript files required for the project, in dependency order
+javascripts:
+  files:
+    - spec/lib/jquery.min.js
+    - app/assets/javascripts/tictactoe.js
+  specs:
+    - spec/lib/jasmine-jquery.js
+    - spec/lib/mock-ajax.js
+    - spec/tictactoe.spec.js
