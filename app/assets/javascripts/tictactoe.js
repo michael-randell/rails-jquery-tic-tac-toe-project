@@ -27,7 +27,7 @@ function checkTie(turn) {
     return false;
   }
 }
-//try .forEach
+
 function attachListeners() {
   //var tdTags = document.getElementsByTagName("td");
 
@@ -109,6 +109,20 @@ function getMarks() {
   return marks;
 };
 
+function resumeGame(existingMarks, gameId) {
+  var localExistingMarks = existingMarks.split(",")
+  resetState()
+  turn = localExistingMarks.filter(String).length
+  debugger;
+  var indexMatch = 0
+  $("td").each(function() {
+    //debugger;
+    this.append(localExistingMarks[indexMatch])
+    indexMatch++
+  })
+  currentGame = gameId
+}
+
 var getAllGames = function() {
   $.getJSON("/games", function(data) {
     showGames(data.games)
@@ -125,7 +139,11 @@ var showGames = function(games) {
 }
 
 var showGame = function(game) {
-  return $('<li>', {'data-state': game.state, 'data-gameid': game.id, text: game.id});
+  var newGame = $('<button>', {'id': 'aGame', 'data-state': game.state, 'data-gameid': game.id, text: game.id});
+  newGame.click(function() {
+    resumeGame(this.getAttribute("data-state"), this.getAttribute("data-gameid"))
+  });
+  return newGame
 }
 //var saveGame = function() {
 //  if (currentGame === 0) {
