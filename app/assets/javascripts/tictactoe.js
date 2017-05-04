@@ -127,7 +127,7 @@ var getAllGames = function() {
     //append to dom function
   });
 };
-
+//test
 var showGames = function(games) {
   var dom = $()
   games.forEach(function(game) {
