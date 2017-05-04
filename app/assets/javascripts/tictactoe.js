@@ -110,13 +110,11 @@ function getMarks() {
 };
 
 function resumeGame(existingMarks, gameId) {
-  var localExistingMarks = existingMarks.split(",")
   resetState()
+  var localExistingMarks = existingMarks.split(",")
   turn = localExistingMarks.filter(String).length
-  debugger;
   var indexMatch = 0
   $("td").each(function() {
-    //debugger;
     this.append(localExistingMarks[indexMatch])
     indexMatch++
   })
