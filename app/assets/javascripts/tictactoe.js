@@ -65,8 +65,9 @@ function checkCombo(combo, tdArr){
 };
 
 function checkWinner() {
+  var tdArr = getMarks()
   for(i = 0; i < combos.length; i++){
-    if (checkCombo(combos[i], getMarks())){
+    if (checkCombo(combos[i], tdArr)){
       message('Player ' + player() + ' Won!')
       return true;
     }
