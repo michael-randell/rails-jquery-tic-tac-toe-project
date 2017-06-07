@@ -1,6 +1,7 @@
 class GamesController < ApplicationController
   def index
     @games = Game.all
+    #binding.pry
     #games_json_serializer = ActiveModel::ArraySerializer.new(@games, each_serializer: GameSerializer).as_json #THIS WORKS TOO
     with_games_key = {"games" => @games.as_json(only: [:id, :state])}
     render json: with_games_key
