@@ -9,11 +9,10 @@ var currentGame = 0;
 function doTurn(event) {
   updateState(event);
   if(checkWinner()) {
-    save(true)
-    resetState();
+    save(true) //save taking care of state reset with true parameter
+    message('Player ' + player() + ' Won!')
   } else if(checkTie(turn)) {
-    save(true)
-    resetState();
+    save(true) //save taking care of state reset with true parameter
     message('Tie game')
   } else {
     turn += 1;
@@ -68,7 +67,6 @@ function checkWinner() {
   var tdArr = getMarks()
   for(i = 0; i < combos.length; i++){
     if (checkCombo(combos[i], tdArr)){
-      message('Player ' + player() + ' Won!')
       return true;
     }
   }
@@ -149,7 +147,8 @@ var save = function(resetCurrentGame) {
     },
     success: function(data) {
       if(resetCurrentGame) {
-        currentGame = undefined;
+        //currentGame = undefined;
+        resetState();
       } else {
         currentGame = data.game.id;
       }
