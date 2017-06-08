@@ -9,14 +9,14 @@ var currentGame = 0;
 function doTurn(event) {
   updateState(event);
   if(checkWinner()) {
-    save(true) //save taking care of state reset with true parameter
+    save(true)               //save taking care of state reset on tie with true parameter
     message('Player ' + player() + ' Won!')
   } else if(checkTie(turn)) {
-    save(true) //save taking care of state reset with true parameter
+    save(true)               //save taking care of state reset on tie with true parameter
     message('Tie game')
   } else {
     turn += 1;
-  }
+  };
 };
 
 function checkTie(turn) {
@@ -24,8 +24,8 @@ function checkTie(turn) {
     return true;
   } else {
     return false;
-  }
-}
+  };
+};
 
 function attachListeners() {
   $("tbody").click(function(event) {
@@ -80,13 +80,13 @@ var resetState = function() {
 }
 
 var updateState = function(event) {
-  $(event.target).html(player());
+  $(event.target).html(player()); //targets and sets the 'X' or 'O' on board square, on click
 };
 
 function getMarks() {
   var marks = []
    $("td").each(function(i) {
-     marks.push($(this).text())
+     marks.push($(this).text())   //getting marks from DOM elements
    })
   return marks;
 };
@@ -94,13 +94,13 @@ function getMarks() {
 function resumeGame(existingMarks, gameId) {
   resetState()
   var localExistingMarks = existingMarks.split(",")
-  turn = localExistingMarks.filter(String).length
+  turn = localExistingMarks.filter(String).length  //to grab and count present string characters, ignore empty strings
   var indexMatch = 0
   $("td").each(function() {
     this.append(localExistingMarks[indexMatch])
-    indexMatch++
+    indexMatch++                                   //different loop functionality
   })
-  currentGame = gameId
+  currentGame = gameId                             //set currentGame on a resume
 }
 
 var getAllGames = function() {
@@ -113,15 +113,15 @@ var getAllGames = function() {
 var showGames = function(games) {
   var dom = $()
   games.forEach(function(game) {
-    dom = dom.add(showGame(game));
+    dom = dom.add(showGame(game)); //add built element to jQuery object
   })
-  $("#games").html(dom);
+  $("#games").html(dom); //append to DOM
 }
 
 var showGame = function(game) {
-  var newGame = $('<button>', {'id': 'aGame', 'data-state': game.state, 'data-gameid': game.id, text: game.id});
+  var newGame = $('<button>', {'id': 'aGame', 'data-state': game.state, 'data-gameid': game.id, text: game.id}); //creation of DOM element, embed data attrs
   newGame.click(function() {
-    resumeGame(this.getAttribute("data-state"), this.getAttribute("data-gameid"))
+    resumeGame(this.getAttribute("data-state"), this.getAttribute("data-gameid")) //attach click event handler, getting embedded data on element
   });
   return newGame
 }
@@ -134,7 +134,7 @@ var save = function(resetCurrentGame) {
   } else {
     url = "/games"
     method = "POST"
-  }
+  };                                //dynamic switch functionality to handle update of data vs. new creation
 
   $.ajax({
     url: url,
@@ -146,14 +146,13 @@ var save = function(resetCurrentGame) {
       }
     },
     success: function(data) {
-      if(resetCurrentGame) {
-        //currentGame = undefined;
+      if(resetCurrentGame) {        //if win or tie, true param is passed to reset board state
         resetState();
       } else {
-        currentGame = data.game.id;
+        currentGame = data.game.id; //or to set currentGame
       }
     }
-  })
+  });
 };
 
 var message = function(text) {
